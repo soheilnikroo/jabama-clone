@@ -84,12 +84,12 @@ const RegisterModal = () => {
           },
           minLength: {
             value: 3,
-            message: 'ایمیل باید حداقل 3 کاراکتر داشته باشد',
+            message: 'نام باید حداقل 3 کاراکتر داشته باشد',
           },
         }}
       />
       <Input
-        id="name"
+        id="password"
         type="password"
         label="رمز عبور"
         disabled={isLoading}
