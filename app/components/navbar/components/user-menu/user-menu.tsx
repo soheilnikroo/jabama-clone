@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useCallback, useState } from 'react';
-import Avatar from '@/app/components/avatar/avatar';
+import Avatar from '@/components/avatar/avatar';
 import { AiOutlineMenu } from 'react-icons/ai';
 import MenuItem from '../menu-item/menu-item';
+import useRegisterModal from '@/hooks/useRegisterModal';
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const registerModal = useRegisterModal();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((prevState) => !prevState);
@@ -32,10 +34,10 @@ const UserMenu = () => {
         </div>
       </div>
       {isOpen && (
-        <div className="absolute rounded-xl shadow-md pl-4 bg-white overflow-hidden right-0 top-12 text-sm">
+        <div className="absolute rounded-xl shadow-md  bg-white overflow-hidden right-1/2 top-12 text-sm">
           <ul className="flex flex-col cursor-pointer">
             <MenuItem label="ورود" onClick={() => {}} />
-            <MenuItem label="ثبت نام" onClick={() => {}} />
+            <MenuItem label="ثبت نام" onClick={registerModal.onOpen} />
           </ul>
         </div>
       )}

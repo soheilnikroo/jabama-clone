@@ -1,6 +1,7 @@
-import Navbar from './components/navbar/navbar';
+import { ClientOnly, Navbar, RegisterModal } from './components';
 import './globals.css';
 import { Vazirmatn } from 'next/font/google';
+import ToasterProvider from './providers/ToasterProvider';
 
 const font = Vazirmatn({ subsets: ['latin'] });
 
@@ -18,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="fal" dir="rtl">
       <body className={font.className}>
+        {/* <ClientOnly> */}
+        <ToasterProvider />
+        <RegisterModal />
         <Navbar />
+        {/* </ClientOnly> */}
         {children}
       </body>
     </html>
