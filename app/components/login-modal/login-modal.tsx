@@ -1,19 +1,23 @@
 'use client';
 
 import React, { useState } from 'react';
-import axios from 'axios';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import useRegisterModal from '@/hooks/useRegisterModal';
 import Modal from '../modal/modal';
 import Heading from '../heading/heading';
 import Input from '../input/input';
 import { toast } from 'react-hot-toast';
 import Button from '../button/button';
+import useLoginModal from '@/hooks/useLoginModal';
+import useRegisterModal from '@/hooks/useRegisterModal';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-const RegisterModal = () => {
+const LoginModal = () => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -22,7 +26,6 @@ const RegisterModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: '',
     },
@@ -31,22 +34,27 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios
-      .post('/api/register', data)
-      .then(() => {
-        registerModal.onClose();
-      })
-      .catch((error) => {
-        toast.error('مشکلی پیش آمده است.');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success('ورود با موفقیت!');
+        router.refresh();
+        loginModal.onClose();
+      }
+
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="خوش آمدید به جاباما!" subTitle="ساخت اکانت!" />
+      <Heading title="خوش برگشتی!" subTitle="ورود به حساب کاربری" />
       <Input
         id="email"
         type="email"
@@ -66,23 +74,6 @@ const RegisterModal = () => {
           maxLength: {
             value: 50,
             message: 'ایمیل باید حداکثر 50 کاراکتر داشته باشد',
-          },
-        }}
-      />
-      <Input
-        id="name"
-        label="نام"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        registerOptions={{
-          required: {
-            value: true,
-            message: 'این فیلد اجباری است',
-          },
-          minLength: {
-            value: 3,
-            message: 'نام باید حداقل 3 کاراکتر داشته باشد',
           },
         }}
       />
@@ -118,42 +109,21 @@ const RegisterModal = () => {
         icon={AiFillGithub}
         onClick={() => {}}
       />
-      <div
-        className="
-        text-neutral-500
-        text-center
-        mt-4
-        font-light
-      "
-      >
-        <div className="justify-center flex flex-row items-center gap-2">
-          <div onClick={registerModal.onClose}>آیا اکانت داری؟</div>
-          <div
-            className="
-            text-neutral-800
-            cursor-pointer
-            hover:underline
-          "
-          >
-            ورود
-          </div>
-        </div>
-      </div>
     </footer>
   );
 
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="ثبت نام"
+      isOpen={loginModal.isOpen}
+      title="ورود"
       actionLabel="ادامه"
       body={bodyContent}
       footer={footerContent}
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
     />
   );
 };
 
-export default RegisterModal;
+export default LoginModal;
