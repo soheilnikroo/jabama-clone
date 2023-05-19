@@ -1,5 +1,5 @@
-import { User } from '@prisma/client';
+import type { SafeUser } from '@/types';
 
 export type UserMenuProps = {
-  currentUser: User | null;
+  currentUser: SafeUser | null;
 };

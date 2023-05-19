@@ -101,13 +101,13 @@ const LoginModal = () => {
         outline
         label="ادامه با گوگل"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn('google')}
       />
       <Button
         outline
         label="ادامه با گیتهاب"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn('github')}
       />
     </footer>
   );

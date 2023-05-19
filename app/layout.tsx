@@ -3,7 +3,7 @@ import './globals.css';
 import { Vazirmatn } from 'next/font/google';
 import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/login-modal/login-modal';
-import getCurrentUser from './actions/getCurrentuser';
+import getCurrentUser from './actions/getCurrentUser';
 
 const font = Vazirmatn({ subsets: ['latin'] });
 
