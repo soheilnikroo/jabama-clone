@@ -4,6 +4,8 @@ import { Vazirmatn } from 'next/font/google';
 import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/login-modal/login-modal';
 import getCurrentUser from './actions/getCurrentUser';
+import RentModal from './rent-modal/rent-modal';
+import SearchModal from './components/search-modal/search-modal';
 
 const font = Vazirmatn({ subsets: ['latin'] });
 
@@ -27,9 +29,11 @@ export default async function RootLayout({
           <ToasterProvider />
           <LoginModal />
           <RegisterModal />
+          <RentModal />
+          <SearchModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
-        {children}
+        <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
   );

@@ -30,10 +30,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
 
     const updatedQuery: any = {
       ...currentQuery,
-      category: id,
+      category: label,
     };
 
-    if (params?.get('category') === id) {
+    if (params?.get('category') === label) {
       delete updatedQuery.category;
     }
 

@@ -8,24 +8,36 @@ import useRegisterModal from '@/hooks/useRegisterModal';
 import useLoginModal from '@/hooks/useLoginModal';
 import type { UserMenuProps } from './user-menu.types';
 import { signOut } from 'next-auth/react';
+import useRentModal from '@/hooks/useRentModal';
+import { useRouter } from 'next/navigation';
 
 const UserMenu = ({ currentUser }: UserMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
+  const router = useRouter();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((prevState) => !prevState);
   }, []);
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
+
   return (
     <div className="relative">
       <div className="flex flex-grow items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
-          صفحه اصلی
+          جاباما خانه شما
         </div>
         <div
           onClick={toggleOpen}
@@ -42,11 +54,28 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
           <ul className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem label="سفر های من" onClick={() => {}} />
-                <MenuItem label="علاقه مندی ها" onClick={() => {}} />
-                <MenuItem label="رزرو های من" onClick={() => {}} />
-                <MenuItem label="مشخصات من" onClick={() => {}} />
-                <MenuItem label="صفحه اصلی جاباما" onClick={() => {}} />
+                <MenuItem
+                  label="سفر های من"
+                  onClick={() => (
+                    <MenuItem
+                      label="علاقه مندی ها"
+                      onClick={() => router.push('/trips')}
+                    />
+                  )}
+                />
+                <MenuItem
+                  label="علاقه مندی ها"
+                  onClick={() => router.push('/favorites')}
+                />
+                <MenuItem
+                  label="رزرو های من"
+                  onClick={() => router.push('/reservations')}
+                />
+                <MenuItem
+                  label="مشخصات من"
+                  onClick={() => router.push('/properties')}
+                />
+                <MenuItem label="جاباما خانه شما" onClick={rentModal.onOpen} />
                 <hr />
                 <MenuItem label="خروج" onClick={() => signOut()} />
               </>

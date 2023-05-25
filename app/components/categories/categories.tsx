@@ -34,7 +34,7 @@ const Categories = () => {
             key={item.id}
             label={item.label}
             icon={item.icon}
-            selected={category === item.id}
+            selected={category === item.label}
           />
         ))}
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
@@ -12,8 +12,10 @@ import Input from '../input/input';
 import { toast } from 'react-hot-toast';
 import Button from '../button/button';
 import { signIn } from 'next-auth/react';
+import useLoginModal from '@/hooks/useLoginModal';
 
 const RegisterModal = () => {
+  const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,6 +46,11 @@ const RegisterModal = () => {
         setIsLoading(false);
       });
   };
+
+  const toggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [registerModal, loginModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -128,7 +135,7 @@ const RegisterModal = () => {
       "
       >
         <div className="justify-center flex flex-row items-center gap-2">
-          <div onClick={registerModal.onClose}>آیا اکانت داری؟</div>
+          <div onClick={toggle}>آیا اکانت داری؟</div>
           <div
             className="
             text-neutral-800

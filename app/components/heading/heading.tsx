@@ -1,14 +1,13 @@
 'use client';
 
-import React from 'react';
 import type { HeadingProps } from './heading.types';
 
-const Heading = ({ title, center, subTitle }: HeadingProps) => {
+const Heading: React.FC<HeadingProps> = ({ title, subtitle, center }) => {
   return (
-    <header className={`${center ? 'text-center' : 'text-start'}`}>
-      <h5 className="text-2xl font-bold">{title}</h5>
-      <p className="font-light text-neutral-500 mt-2">{subTitle}</p>
-    </header>
+    <div className={center ? 'text-center' : 'text-start'}>
+      <div className="text-2xl font-bold">{title}</div>
+      <div className="font-light text-neutral-500 mt-2">{subtitle}</div>
+    </div>
   );
 };
 
