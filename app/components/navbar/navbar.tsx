@@ -4,6 +4,7 @@ import React from 'react';
 import Container from '../container/container';
 import { Logo, Search, UserMenu } from './components';
 import type { NavbarProps } from './navbar.types';
+import Categories from '../categories/categories';
 
 const Navbar = ({ currentUser }: NavbarProps) => {
   return (
@@ -17,6 +18,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
           </div>
         </Container>
       </div>
+      <Categories />
     </nav>
   );
 };
