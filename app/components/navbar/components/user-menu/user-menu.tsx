@@ -56,12 +56,7 @@ const UserMenu = ({ currentUser }: UserMenuProps) => {
               <>
                 <MenuItem
                   label="سفر های من"
-                  onClick={() => (
-                    <MenuItem
-                      label="علاقه مندی ها"
-                      onClick={() => router.push('/trips')}
-                    />
-                  )}
+                  onClick={() => router.push('/trips')}
                 />
                 <MenuItem
                   label="علاقه مندی ها"
