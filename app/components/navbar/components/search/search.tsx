@@ -76,6 +76,8 @@ const Search = () => {
           className="
             text-sm 
             font-semibold 
+            hidden 
+            sm:block 
             px-6
           "
         >
