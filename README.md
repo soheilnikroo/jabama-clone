@@ -1,5 +1,3 @@
-Sure, I'd be happy to help you with that. Here's an example of what your README.md file might look like for your NestJS v13 project that is a clone of jabama.com:
-
 # Project Name
 
 Jabama Clone
