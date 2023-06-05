@@ -28,7 +28,7 @@ This project is a clone of the Jabama website, built using NestJS version 13.
 
 The following technologies were used to build this project:
 
-- NestJS v13
+- NextJS 13
 - TypeScript
 - MongoDB
 - React JS
